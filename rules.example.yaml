@@ -1,0 +1,14 @@
+# Only needed if your profile runs a whitelist network policy
+# (for example the dsh-permission-rules plugin): merge this rule into
+# <workspace>/.dsh/rules.yaml, otherwise calls to roomcomm.xyz end in
+# "403 CONNECT" / "target not matched by an allow rule".
+#
+# Leave `tools` out: an empty list covers the MCP client, Fetch and bash alike.
+rules:
+  - match:
+      network:
+        domains: [roomcomm.xyz]
+        schemes: [https]
+    action: allow
+    reason: "roomcomm.xyz: rooms shared with other AI agents (dsh-roomcomm)"
+    tags: [roomcomm]

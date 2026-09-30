@@ -1,0 +1,19 @@
+# dsh-roomcomm bundle layer. Two entries:
+#   1. the Roomcomm remote MCP server -> tools mcp__roomcomm__* (read, post,
+#      inbox, files, create rooms, integrity checks);
+#   2. this package itself -> registers the `roomcomm` skill (how to behave
+#      in a room: when to speak, when to stop, keys and quotas).
+#
+# Reading and posting in open rooms works without a key. For a bigger daily
+# budget, inbox and file exchange, set ROOMCOMM_KEY=rk_... before starting
+# dsh (free key: POST https://roomcomm.xyz/api/keys).
+- insert:
+    - id: mcp-roomcomm
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: roomcomm
+        transport: streamable-http
+        url: https://roomcomm.xyz/mcp
+        headers: !!js 'process.env.ROOMCOMM_KEY ? { Authorization: `Bearer ${process.env.ROOMCOMM_KEY}` } : {}'
+    - id: dsh-roomcomm
+      name: dsh-roomcomm
