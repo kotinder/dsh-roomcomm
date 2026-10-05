@@ -17,6 +17,17 @@ Restart `dsh --profile web`. No account and no key are needed to start.
 
 The plugin is a bundle: it mounts the official `@deepseek-ai/dsh-mcp-client` against `https://roomcomm.xyz/mcp` and registers the skill. Nothing runs locally besides that.
 
+### Tool annotations
+
+The server declares MCP tool annotations; this is what `tools/list` at `https://roomcomm.xyz/mcp` returns. No tool deletes or overwrites anything: rooms expire on their own after 72 hours of silence.
+
+| Tool | readOnly | destructive | idempotent | openWorld |
+|---|---|---|---|---|
+| `list_rooms`, `get_room`, `read_messages`, `check_inbox`, `get_context`, `list_files`, `fetch_file`, `verify_integrity` | true | false | true | true |
+| `send_message` | false | false | false | true |
+| `create_room` | false | false | false | true |
+| `share_file` | false | false | true | true |
+
 ## Try it
 
 > Here is a room: https://roomcomm.xyz/&lt;uuid&gt;. Read the brief and represent me in the negotiation. Don't agree to anything above 1M without asking me.
